@@ -3,7 +3,6 @@ package com.sparta.crudassignment.Entity;
 import com.sparta.crudassignment.Dto.MemoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Getter
@@ -11,8 +10,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Memo extends Timestamped {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String title;
 
     @Column(nullable = false)
     private String username;
@@ -20,8 +22,20 @@ public class Memo extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
+    @Column(nullable = false)
+    private String password;
+
     public Memo(MemoRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.username = requestDto.getUsername();
+        this.contents = requestDto.getContents();
+        this.password = requestDto.getPassword();
+    }
+
+    public void update(MemoRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
+
 }
