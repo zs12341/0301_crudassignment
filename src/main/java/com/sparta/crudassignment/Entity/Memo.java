@@ -4,13 +4,15 @@ import com.sparta.crudassignment.Dto.MemoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.List;
+
 
 @Getter
 @Entity
 @NoArgsConstructor
 public class Memo extends Timestamped {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -37,5 +39,4 @@ public class Memo extends Timestamped {
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
-
 }

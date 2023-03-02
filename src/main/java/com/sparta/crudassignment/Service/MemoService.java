@@ -30,6 +30,15 @@ public class MemoService {
 
 
     @Transactional
+    public Memo getMemo(Long id){
+        Memo memo = memoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 이름입니다.")
+        );
+        return memo;
+    }
+
+
+    @Transactional
     public Long update(Long id, MemoRequestDto requestDto) {
         Memo memo = memoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")

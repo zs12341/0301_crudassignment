@@ -5,8 +5,6 @@ import com.sparta.crudassignment.Entity.Memo;
 import lombok.RequiredArgsConstructor;
 import com.sparta.crudassignment.Service.MemoService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
 
 @RestController
@@ -23,6 +21,11 @@ public class MemoController {
     @GetMapping("/api/memos")
     public List<Memo> getMemos() {
         return memoService.getMemos();
+    }
+
+    @GetMapping("/api/memos/{id}")
+    public Memo getMemo(@PathVariable Long id) {
+        return memoService.getMemo(id);
     }
 
     @PutMapping("/api/memos/{id}")
