@@ -1,10 +1,9 @@
-package com.sparta.crudassignment.Entity;
+package com.sparta.crudassignment.entity;
 
-import com.sparta.crudassignment.Dto.MemoRequestDto;
+import com.sparta.crudassignment.dto.MemoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter

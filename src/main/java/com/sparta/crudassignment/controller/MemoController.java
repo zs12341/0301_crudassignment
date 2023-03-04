@@ -1,9 +1,9 @@
-package com.sparta.crudassignment.Controller;
+package com.sparta.crudassignment.controller;
 
-import com.sparta.crudassignment.Dto.MemoRequestDto;
-import com.sparta.crudassignment.Entity.Memo;
+import com.sparta.crudassignment.dto.MemoRequestDto;
+import com.sparta.crudassignment.entity.Memo;
 import lombok.RequiredArgsConstructor;
-import com.sparta.crudassignment.Service.MemoService;
+import com.sparta.crudassignment.service.MemoService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -12,7 +12,6 @@ import java.util.List;
 public class MemoController {
 
     private final MemoService memoService;
-
     @PostMapping("/api/memos")
     public Memo createMemo(@RequestBody MemoRequestDto requestDto) {
         return memoService.createMemo(requestDto);

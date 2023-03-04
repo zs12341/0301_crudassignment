@@ -1,6 +1,6 @@
-package com.sparta.crudassignment.Repository;
+package com.sparta.crudassignment.repository;
 
-import com.sparta.crudassignment.Entity.Memo;
+import com.sparta.crudassignment.entity.Memo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,12 +1,11 @@
-package com.sparta.crudassignment.Service;
+package com.sparta.crudassignment.service;
 
-import com.sparta.crudassignment.Dto.MemoRequestDto;
-import com.sparta.crudassignment.Entity.Memo;
-import com.sparta.crudassignment.Repository.MemoRepository;
+import com.sparta.crudassignment.dto.MemoRequestDto;
+import com.sparta.crudassignment.entity.Memo;
+import com.sparta.crudassignment.repository.MemoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
