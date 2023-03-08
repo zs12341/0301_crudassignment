@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
-
 @Getter
 @Entity
 @NoArgsConstructor
 public class Memo extends Timestamped {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

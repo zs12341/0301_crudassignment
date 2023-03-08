@@ -7,11 +7,12 @@ import java.time.LocalDateTime;
 
 @Getter
 public class MemoResponseDto {
-    private Long id;
-    private String username;
-    private String title;
-    private String contents;
-    private LocalDateTime createdAt;
+
+    private final Long id;
+    private final String username;
+    private final String title;
+    private final String contents;
+    private final LocalDateTime createdAt;
 
     public MemoResponseDto(Memo memo) {
         this.id = memo.getId();

@@ -16,8 +16,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // nullable: null 허용 여부
-    // unique: 중복 허용 여부 (false 일때 중복 허용)
     @Column(nullable = false, unique = true)
     private String username;
 

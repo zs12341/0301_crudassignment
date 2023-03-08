@@ -3,7 +3,6 @@ package com.sparta.crudassignment.controller;
 import com.sparta.crudassignment.dto.MemoListResponseDto;
 import com.sparta.crudassignment.dto.MemoRequestDto;
 import com.sparta.crudassignment.dto.MemoResponseDto;
-import com.sparta.crudassignment.entity.Memo;
 import lombok.RequiredArgsConstructor;
 import com.sparta.crudassignment.service.MemoService;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +17,17 @@ import java.util.List;
 public class MemoController {
 
     private final MemoService memoService;
+
     @GetMapping("/memo") // 전체 메모 조회
     public List<MemoListResponseDto> getMemoList() {
         return memoService.getMemoList();
     }
+
     @PostMapping("/memo") // 메모 작성
     public MemoResponseDto createMemo(@RequestBody MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest) {
         return memoService.createMemo(memoRequestDto, httpServletRequest);
     }
+
     @GetMapping("/memo/{id}") // 특정 메모 조회
     public MemoListResponseDto getMemo(@PathVariable Long id) {
         return memoService.getMemo(id);
@@ -37,7 +39,7 @@ public class MemoController {
     }
 
     @DeleteMapping("/memo/{id}") // 메모 삭제
-    public ResponseEntity deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
+    public ResponseEntity deleteMemo(@PathVariable Long id, HttpServletRequest httpServletRequest){
         return ResponseEntity.ok().body(memoService.delete(id, httpServletRequest));
     }
 }

@@ -8,8 +8,6 @@ import com.sparta.crudassignment.repository.MemoRepository;
 import com.sparta.crudassignment.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,35 +24,38 @@ public class MemoService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    @Transactional(readOnly = true) // 게시글 전체 조회 // dto에 담는 이유 ; 객체지향 , List ; 지금은 이미 명세서에 써있기 때문에
+    @Transactional(readOnly = true) // 메모 전체 조회
     public List<MemoListResponseDto> getMemoList() {
+
         List<MemoListResponseDto> memoListResponseDto = new ArrayList<>();
         List<Memo> memoList = memoRepository.findAllByOrderByModifiedAtDesc();
         for(Memo memo : memoList) {
             memoListResponseDto.add(new MemoListResponseDto(memo));
         }
         return memoListResponseDto;
-    } // 괜히 어려운 방법으로 함 ;; 지금은 그냥 바로 리턴해도됨
+    }
 
-    @Transactional // 게시글 작성 //
+    @Transactional // 메모 작성
     public MemoResponseDto createMemo(MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
-        User user = getUserInfo(httpServletRequest);
+
+        User user = getUserCheck(httpServletRequest);
         Memo memo = memoRepository.saveAndFlush(new Memo(memoRequestDto, user));
         return new MemoResponseDto(memo);
     }
 
-    @Transactional(readOnly = true) // 특정 게시글 조회
+    @Transactional(readOnly = true) // 특정 메모 조회
     public MemoListResponseDto getMemo(Long id){
+
         Memo memo = memoRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("일치하는 글이 없습니다.")
         );
         return new MemoListResponseDto(memo);
     }
 
-    @Transactional
+    @Transactional // 메모 수정
     public MemoResponseDto update(Long id, MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
-        User user = getUserInfo(httpServletRequest);
 
+        User user = getUserCheck(httpServletRequest);
         Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("수정할 게시글이 존재하지 않습니다.")
         );
@@ -62,10 +63,10 @@ public class MemoService {
         return new MemoResponseDto(memo);
     }
 
-    @Transactional
+    @Transactional // 메모 삭제
     public MessageResponse delete (Long id, HttpServletRequest httpServletRequest) {
-        User user = getUserInfo(httpServletRequest);
 
+        User user = getUserCheck(httpServletRequest);
         Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("삭제할 게시글이 존재하지 않습니다.")
         );
@@ -73,12 +74,11 @@ public class MemoService {
         return new MessageResponse(StatusEnum.OK);
     }
 
+    //사용자 확인 중복코드
+    public User getUserCheck(HttpServletRequest httpServletRequest) {
 
-
-    //사용자 확인
-    public User getUserInfo(HttpServletRequest httpServletRequest) {
         String token = jwtUtil.resolveToken(httpServletRequest);
-        Claims claims; // HashMap : key-value /
+        Claims claims;
 
         if (token != null) {
 

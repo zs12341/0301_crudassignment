@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 
 @Getter
 public class MemoListResponseDto {
-    private String username;
-    private String title;
-    private String contents;
-    private LocalDateTime createdAt;
 
-    //생성자 까지는 알겠는데 이 안에 메모가 왜 들어가지?
+    private final String username;
+    private final String title;
+    private final String contents;
+    private final LocalDateTime createdAt;
+
     public MemoListResponseDto(Memo memo) {
         this.username = memo.getUsername();
         this.title = memo.getTitle();

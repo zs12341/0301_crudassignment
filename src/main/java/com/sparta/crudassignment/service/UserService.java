@@ -23,14 +23,12 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    // 모든 쿼리가 하나의 트랜잭션으로 묶이게 된다.
     @Transactional
     public MessageResponse signup(SignupRequestDto signupRequestDto) {
+
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
 
-        //Optional : java.util / 예외처리 , null값 처리를 위한 클래스, null값 반환보다 optional 객체를
-        //반환하는 것이 안전하기 때문에 사용한다.
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
         if (found.isPresent()) { // == found가 null이 아니라면 (isPresent는 Optional의 메소드)
@@ -53,6 +51,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public MessageResponse login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
