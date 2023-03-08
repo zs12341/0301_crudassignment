@@ -1,39 +1,43 @@
 package com.sparta.crudassignment.controller;
 
+import com.sparta.crudassignment.dto.MemoListResponseDto;
 import com.sparta.crudassignment.dto.MemoRequestDto;
+import com.sparta.crudassignment.dto.MemoResponseDto;
 import com.sparta.crudassignment.entity.Memo;
 import lombok.RequiredArgsConstructor;
 import com.sparta.crudassignment.service.MemoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class MemoController {
 
     private final MemoService memoService;
-    @PostMapping("/api/memos")
-    public Memo createMemo(@RequestBody MemoRequestDto requestDto) {
-        return memoService.createMemo(requestDto);
+    @GetMapping("/memo") // 전체 메모 조회
+    public List<MemoListResponseDto> getMemoList() {
+        return memoService.getMemoList();
     }
-
-    @GetMapping("/api/memos")
-    public List<Memo> getMemos() {
-        return memoService.getMemos();
+    @PostMapping("/memo") // 메모 작성
+    public MemoResponseDto createMemo(@RequestBody MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest) {
+        return memoService.createMemo(memoRequestDto, httpServletRequest);
     }
-
-    @GetMapping("/api/memos/{id}")
-    public Memo getMemo(@PathVariable Long id) {
+    @GetMapping("/memo/{id}") // 특정 메모 조회
+    public MemoListResponseDto getMemo(@PathVariable Long id) {
         return memoService.getMemo(id);
     }
 
-    @PutMapping("/api/memos/{id}")
-    public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
-        return memoService.update(id, requestDto);
+    @PutMapping("/memo/{id}") // 메모 수정
+    public MemoResponseDto updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest) {
+        return memoService.update(id, memoRequestDto, httpServletRequest);
     }
 
-    @DeleteMapping("/api/memos/{id}")
-    public String deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto){
-        return memoService.deleteMemo(id, requestDto);
+    @DeleteMapping("/memo/{id}") // 메모 삭제
+    public ResponseEntity deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
+        return ResponseEntity.ok().body(memoService.delete(id, httpServletRequest));
     }
 }

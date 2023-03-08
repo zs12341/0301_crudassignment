@@ -2,10 +2,10 @@ package com.sparta.crudassignment.dto;
 
 import lombok.Getter;
 
-@Getter
+@Getter // @ToString :
 public class MemoRequestDto {
     private String title;
-    private String username;
     private String contents;
-    private String password;
+    private String username;
+
 }

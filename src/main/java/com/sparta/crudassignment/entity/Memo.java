@@ -23,19 +23,19 @@ public class Memo extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
-    @Column(nullable = false)
-    private String password;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
-    public Memo(MemoRequestDto requestDto){
-        this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
-        this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
+    public Memo(MemoRequestDto memoRequestDto, User user){
+        this.title = memoRequestDto.getTitle();
+        this.username = user.getUsername();
+        this.contents = memoRequestDto.getContents();
+        this.user = user;
     }
 
-    public void update(MemoRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
-        this.contents = requestDto.getContents();
+    public void update(MemoRequestDto memoRequestDto) {
+        this.title = memoRequestDto.getTitle();
+        this.contents = memoRequestDto.getContents();
     }
 }
