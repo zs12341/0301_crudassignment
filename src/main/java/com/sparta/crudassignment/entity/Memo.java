@@ -4,6 +4,8 @@ import com.sparta.crudassignment.dto.MemoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Entity
@@ -12,6 +14,7 @@ public class Memo extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "MEMO_ID", nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -24,8 +27,12 @@ public class Memo extends Timestamped {
     private String contents;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)//얘가 외래키
     private User user;
+
+    @OneToMany(mappedBy = "memo", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList;
+
 
     public Memo(MemoRequestDto memoRequestDto, User user){
         this.title = memoRequestDto.getTitle();

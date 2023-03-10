@@ -1,6 +1,8 @@
 package com.sparta.crudassignment.jwt;
 
+import com.sparta.crudassignment.entity.User;
 import com.sparta.crudassignment.entity.UserRoleEnum;
+import com.sparta.crudassignment.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,8 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
+
+    private UserRepository userRepository;
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String AUTHORIZATION_KEY = "auth";
@@ -81,4 +85,27 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
+    // 토큰 검증과 사용자 존재여부 확인 함수
+    public User getUserInfo(HttpServletRequest request) {
+        String token = resolveToken(request);
+        Claims claims;
+        User user = null;
+
+        if (token != null) {
+            // JWT의 유효성을 검증하여 올바른 JWT인지 확인
+            if (validateToken(token)) {
+                // 토큰에서 사용자 정보 가져오기
+                claims = getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
+            }
+
+            // 토큰에서 가져온 사용자 정보를 사용하여 DB 조회
+            user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")
+            );
+            return user;
+        }
+        throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
+    }
 }

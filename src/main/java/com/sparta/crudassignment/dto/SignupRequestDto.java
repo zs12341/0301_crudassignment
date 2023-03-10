@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Pattern;
 
-@Setter
+
 @Getter
 public class SignupRequestDto {
 
@@ -17,7 +17,7 @@ public class SignupRequestDto {
     @Pattern(regexp = "^[a-zA-Z0-9]*$")
     private String password;
 
-    private boolean admin = false;
+    private final boolean admin = false;
 
-    private String adminToken = "";
+    private final String adminToken = "";
 }
