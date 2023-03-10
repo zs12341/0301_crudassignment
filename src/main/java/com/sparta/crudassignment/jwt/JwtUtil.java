@@ -22,7 +22,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtUtil {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String AUTHORIZATION_KEY = "auth";

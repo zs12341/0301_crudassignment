@@ -56,7 +56,7 @@ public class MemoService {
     public MemoResponseDto update(Long id, MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
 
         User user = getUserCheck(httpServletRequest);
-        Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow(
+        Memo memo = memoRepository.findByIdAndUserId(id, user.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("수정할 게시글이 존재하지 않습니다.")
         );
         memo.update(memoRequestDto);
@@ -67,7 +67,7 @@ public class MemoService {
     public MessageResponse delete (Long id, HttpServletRequest httpServletRequest) {
 
         User user = getUserCheck(httpServletRequest);
-        Memo memo = memoRepository.findByIdAndUsername(id, user.getUsername()).orElseThrow(
+        Memo memo = memoRepository.findByIdAndUserId(id, user.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("삭제할 게시글이 존재하지 않습니다.")
         );
         memoRepository.deleteById(id);
