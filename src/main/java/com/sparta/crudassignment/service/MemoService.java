@@ -38,7 +38,7 @@ public class MemoService {
     @Transactional // 메모 작성
     public MemoResponseDto createMemo(MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
 
-        User user = getUserCheck(httpServletRequest);
+        User user = jwtUtil.getUserCheck(httpServletRequest);
         Memo memo = memoRepository.saveAndFlush(new Memo(memoRequestDto, user));
         return new MemoResponseDto(memo);
     }
@@ -55,7 +55,7 @@ public class MemoService {
     @Transactional // 메모 수정
     public MemoResponseDto update(Long id, MemoRequestDto memoRequestDto, HttpServletRequest httpServletRequest){
 
-        User user = getUserCheck(httpServletRequest);
+        User user = jwtUtil.getUserCheck(httpServletRequest);
         Memo memo = memoRepository.findByIdAndUserId(id, user.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("수정할 게시글이 존재하지 않습니다.")
         );
@@ -66,7 +66,7 @@ public class MemoService {
     @Transactional // 메모 삭제
     public MessageResponse delete (Long id, HttpServletRequest httpServletRequest) {
 
-        User user = getUserCheck(httpServletRequest);
+        User user = jwtUtil.getUserCheck(httpServletRequest);
         Memo memo = memoRepository.findByIdAndUserId(id, user.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("삭제할 게시글이 존재하지 않습니다.")
         );
@@ -74,27 +74,7 @@ public class MemoService {
         return new MessageResponse(StatusEnum.OK);
     }
 
-    //사용자 확인 중복코드
-    public User getUserCheck(HttpServletRequest httpServletRequest) {
 
-        String token = jwtUtil.resolveToken(httpServletRequest);
-        Claims claims;
-
-        if (token != null) {
-
-            if (jwtUtil.validateToken(token)) {
-                claims = jwtUtil.getUserInfoFromToken(token);
-            } else {
-                throw new IllegalArgumentException("유효한 토큰이 아닙니다.");
-            }
-
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
-                    () -> new IllegalArgumentException("존재하지 않는 사용자입니다.")
-            );
-            return user;
-        }
-        throw new IllegalArgumentException("토큰이 없습니다.");
-    }
 }
 
 

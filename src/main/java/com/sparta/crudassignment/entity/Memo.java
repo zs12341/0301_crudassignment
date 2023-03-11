@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.List;
 public class Memo extends Timestamped {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO면 각각 따로 나오는것처럼 보임.
     @Column(name = "MEMO_ID", nullable = false)
     private Long id;
 
@@ -31,7 +32,7 @@ public class Memo extends Timestamped {
     private User user;
 
     @OneToMany(mappedBy = "memo", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList;
+    private List<Comment> commentList = new ArrayList<>();
 
 
     public Memo(MemoRequestDto memoRequestDto, User user){

@@ -86,8 +86,8 @@ public class JwtUtil {
     }
 
     // 토큰 검증과 사용자 존재여부 확인 함수
-    public User getUserInfo(HttpServletRequest request) {
-        String token = resolveToken(request);
+    public User getUserCheck(HttpServletRequest httpServletRequest) {
+        String token = resolveToken(httpServletRequest);
         Claims claims;
         User user = null;
 

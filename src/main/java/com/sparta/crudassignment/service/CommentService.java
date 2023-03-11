@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-    //final 달지않으면 lombok이 작동하지 않음..
+
     private final MemoRepository memoRepository;
     private final CommentRepository commentRepository;
     private final JwtUtil jwtUtil;
@@ -29,7 +29,7 @@ public class CommentService {
         Memo memo = memoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("일치하는 글이 없습니다.")
         );
-        User user = jwtUtil.getUserInfo(httpServletRequest);
+        User user = jwtUtil.getUserCheck(httpServletRequest);
 
         Comment comment = commentRepository.save(new Comment(memo, commentRequestDto, user));
         return new CommentResponseDto(comment);
@@ -41,7 +41,7 @@ public class CommentService {
         Memo memo = memoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("일치하는 글이 없습니다.")
         );
-        User user = jwtUtil.getUserInfo(httpServletRequest);
+        User user = jwtUtil.getUserCheck(httpServletRequest);
         Comment comment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("일치하는 댓글이 없습니다.")
         );
@@ -55,7 +55,7 @@ public class CommentService {
         Memo memo = memoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("일치하는 글이 없습니다.")
         );
-        User user = jwtUtil.getUserInfo(httpServletRequest);
+        User user = jwtUtil.getUserCheck(httpServletRequest);
         Comment comment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("일치하는 댓글이 없습니다.")
         );
@@ -63,4 +63,5 @@ public class CommentService {
         commentRepository.deleteById(id);
         return new MessageResponse(StatusEnum.OK);
     }
+
 }
