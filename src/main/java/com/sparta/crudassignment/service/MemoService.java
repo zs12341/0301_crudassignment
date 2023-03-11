@@ -64,7 +64,7 @@ public class MemoService {
     }
 
     @Transactional // 메모 삭제
-    public MessageResponse delete (Long id, HttpServletRequest httpServletRequest) {
+    public MessageResponse delete(Long id, HttpServletRequest httpServletRequest) {
 
         User user = jwtUtil.getUserCheck(httpServletRequest);
         Memo memo = memoRepository.findByIdAndUserId(id, user.getUsername()).orElseThrow(

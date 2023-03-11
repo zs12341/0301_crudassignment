@@ -26,9 +26,7 @@ public class CommentService {
     //댓글 작성
     public CommentResponseDto createComment(Long id, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest){
 
-        Memo memo = memoRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("일치하는 글이 없습니다.")
-        );
+        Memo memo = getMemoById(id);
         User user = jwtUtil.getUserCheck(httpServletRequest);
 
         Comment comment = commentRepository.save(new Comment(memo, commentRequestDto, user));
@@ -38,13 +36,9 @@ public class CommentService {
     //댓글 수정
     public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest){
 
-        Memo memo = memoRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("일치하는 글이 없습니다.")
-        );
+        Memo memo = getMemoById(id);
         User user = jwtUtil.getUserCheck(httpServletRequest);
-        Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("일치하는 댓글이 없습니다.")
-        );
+        Comment comment = getCommentById(id);
 
         comment.update(commentRequestDto);
         return new CommentResponseDto(comment);
@@ -52,16 +46,25 @@ public class CommentService {
 
     //댓글 삭제
     public MessageResponse deleteComment(Long id, HttpServletRequest httpServletRequest){
-        Memo memo = memoRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("일치하는 글이 없습니다.")
-        );
+
+        getMemoById(id);
         User user = jwtUtil.getUserCheck(httpServletRequest);
-        Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("일치하는 댓글이 없습니다.")
-        );
+        Comment comment = getCommentById(id);
 
         commentRepository.deleteById(id);
         return new MessageResponse(StatusEnum.OK);
     }
 
+    // MemoRepository에서 글을 가져옴
+    public Memo getMemoById(Long id) {
+        return memoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("일치하는 글이 없습니다.")
+        );
+    }
+    // CommentRepository에서 댓글을 가져옴
+    public Comment getCommentById(Long id) {
+        return commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("일치하는 댓글이 없습니다.")
+        );
+    }
 }
