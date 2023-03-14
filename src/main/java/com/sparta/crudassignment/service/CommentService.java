@@ -10,18 +10,22 @@ import com.sparta.crudassignment.entity.User;
 import com.sparta.crudassignment.jwt.JwtUtil;
 import com.sparta.crudassignment.repository.CommentRepository;
 import com.sparta.crudassignment.repository.MemoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-@RequiredArgsConstructor
 public class CommentService {
 
     private final MemoRepository memoRepository;
     private final CommentRepository commentRepository;
     private final JwtUtil jwtUtil;
+
+    public CommentService(MemoRepository memoRepository, CommentRepository commentRepository, JwtUtil jwtUtil) {
+        this.memoRepository = memoRepository;
+        this.commentRepository = commentRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
     //댓글 작성
     public CommentResponseDto createComment(Long id, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest){

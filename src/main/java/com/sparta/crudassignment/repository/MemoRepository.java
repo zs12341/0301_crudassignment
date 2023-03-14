@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface MemoRepository extends JpaRepository<Memo, Long> {
 
     List<Memo> findAllByOrderByModifiedAtDesc();
 
-    Optional<Memo> findByIdAndUserId(Long id, String username);
+    Optional<Memo> findByIdAndUsername(Long id, String username);
 }

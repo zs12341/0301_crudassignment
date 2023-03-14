@@ -8,7 +8,6 @@ import com.sparta.crudassignment.entity.User;
 import com.sparta.crudassignment.entity.UserRoleEnum;
 import com.sparta.crudassignment.jwt.JwtUtil;
 import com.sparta.crudassignment.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+
+    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
+        this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+    }
 
     @Transactional
     public MessageResponse signup(SignupRequestDto signupRequestDto) {

@@ -1,14 +1,7 @@
 package com.sparta.crudassignment.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.*;
 
-@Getter
-@NoArgsConstructor
 @Entity(name = "users")
 public class User {
 
@@ -32,4 +25,22 @@ public class User {
         this.role = role;
     }
 
+    public User() {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public UserRoleEnum getRole() {
+        return this.role;
+    }
 }

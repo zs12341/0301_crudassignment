@@ -1,11 +1,9 @@
 package com.sparta.crudassignment.dto;
 
 import com.sparta.crudassignment.entity.Memo;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
 public class MemoListResponseDto {
 
     private final String username;
@@ -20,5 +18,25 @@ public class MemoListResponseDto {
         this.contents = memo.getContents();
         this.createdAt = memo.getCreatedAt();
         this.modifiedAt = memo.getModifiedAt();
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getContents() {
+        return this.contents;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return this.modifiedAt;
     }
 }

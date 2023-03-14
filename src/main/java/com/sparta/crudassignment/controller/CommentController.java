@@ -5,7 +5,6 @@ import com.sparta.crudassignment.dto.CommentResponseDto;
 import com.sparta.crudassignment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

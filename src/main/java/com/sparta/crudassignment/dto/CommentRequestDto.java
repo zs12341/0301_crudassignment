@@ -1,8 +1,10 @@
 package com.sparta.crudassignment.dto;
 
-import lombok.Getter;
-@Getter
 public class CommentRequestDto {
 
     private String comment;
+
+    public String getComment() {
+        return this.comment;
+    }
 }

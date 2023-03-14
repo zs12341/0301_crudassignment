@@ -3,7 +3,6 @@ package com.sparta.crudassignment.controller;
 import com.sparta.crudassignment.dto.MemoListResponseDto;
 import com.sparta.crudassignment.dto.MemoRequestDto;
 import com.sparta.crudassignment.dto.MemoResponseDto;
-import lombok.RequiredArgsConstructor;
 import com.sparta.crudassignment.service.MemoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api")
 public class MemoController {
 
-    private final MemoService memoService;
+    private final MemoService memoService; // RequiredArgsConstructor를 사용하면 선언 만으로 의존성 주입이 가능하다.
+
+    public MemoController(MemoService memoService) {
+        this.memoService = memoService;
+    }
 
     @GetMapping("/memo") // 전체 메모 조회
     public List<MemoListResponseDto> getMemoList() {

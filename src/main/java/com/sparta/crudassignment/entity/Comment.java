@@ -1,14 +1,10 @@
 package com.sparta.crudassignment.entity;
 
 import com.sparta.crudassignment.dto.CommentRequestDto;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
 @Entity
-@RequiredArgsConstructor
 public class Comment extends Timestamped {
 
     @Id
@@ -37,8 +33,31 @@ public class Comment extends Timestamped {
         this.comment = commentRequestDto.getComment();
     }
 
+    public Comment() {
+    }
+
     public void update(CommentRequestDto commentRequestDto) {
         this.comment = commentRequestDto.getComment();
 
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getComment() {
+        return this.comment;
+    }
+
+    public Memo getMemo() {
+        return this.memo;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 }

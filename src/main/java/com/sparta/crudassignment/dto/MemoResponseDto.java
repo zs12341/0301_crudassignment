@@ -1,13 +1,7 @@
 package com.sparta.crudassignment.dto;
 
 import com.sparta.crudassignment.entity.Memo;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDateTime;
-
-@Getter
 public class MemoResponseDto {
 
     private final Long id;
@@ -23,5 +17,21 @@ public class MemoResponseDto {
         this.title = memo.getTitle();
         this.contents = memo.getContents();
 
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getContents() {
+        return this.contents;
     }
 }
