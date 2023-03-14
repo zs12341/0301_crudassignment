@@ -6,7 +6,6 @@ import com.sparta.crudassignment.entity.User;
 import com.sparta.crudassignment.jwt.JwtUtil;
 import com.sparta.crudassignment.repository.MemoRepository;
 import com.sparta.crudassignment.repository.UserRepository;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
